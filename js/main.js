@@ -157,7 +157,7 @@ function editItem(){
 	$('aat').value = item.aat[1];
 	$('pri').value = item.pri[1];
 	//$('gametype').value = item.gametype[1];
-	$('addinfo').value = item.addinfo[1];
+	$('aditionalinfo').value = item.addinfo[1];
 	var radios = document.forms[0].getSelectedRadio;
 	for( var i=0; i<radios.length; i++){
 		if(radios[i].value == "XBox" && item.getSelectedRadio[1] == "XBox") {
@@ -184,6 +184,13 @@ function editItem(){
 	$('priority').value = item.priority[1];
 	$('addinfo').value = item.addinfo[1];
 
+	save.removeEventListener("click", storeData);
+
+	$('submit').value = "Edit Game";
+	var editSubmit = $('submit');
+	editSubmit.addEventListener("click", validate);
+	editSubmit.key = this.key;
+
 };
 
 function clearLocal(){
@@ -197,11 +204,68 @@ function clearLocal(){
 	}
 }
 
+function validate(e){
+	var getGrops = $('groups');
+	var getGname = $('gname');
+	var getAat =  $('aat');
+	var getPri = $('pri');
+	var getRday = ('rday');
+
+	errMsg.innerHTML = "";
+	getGrops.style.border = "1px solid black";
+	getGname.style.border = "1px solid black";
+	getRday.style.border = "1px solid black";
+	getAat.style.border = "1px solid black";
+	getPri.style.border = "1px solid black";
+
+	var messageAry = [];
+
+	if(getGrops.value ==  "---Chose Game type---"){
+		var GroupError = " Please choose Game type !";
+		getGrops.style.border = "1px solid red";
+		messageAry.push(GroupError); 
+
+	}
+	if(getGname.value === ""){
+		var GnameError = " Please enter game name !";
+		getGname.style.border = "1px solid red";
+		messageAry.push(GnameError);
+	}
+	if(getRday.value === ""){
+		var RdayError = " Please enter Relise date !";
+		getRday.style.border = "1px solid red";
+		messageAry.push(RdayError);
+	}
+	if(getAat.value === ""){
+		var AatError = " Please enter Available at !";
+		getAat.style.border = "1px solid red";
+		messageAry.push(AatError);
+	}
+	if(getPri.value === ""){
+		var PriError = " Please enter Price !";
+		getPri.style.border = "1px solid red";
+		messageAry.push(PriError);
+	}
+	// display errors
+	if(messageAry.length >= 1){
+		for(var i=0, j=messageAry.length; i < j; i++){
+			var txt = document.createElement('li');
+			txt.innerHTML = messageAry[i];
+			errMsg.appendChild(txt);
+		}
+		e.preventDefault();
+		return false;
+	}else{
+		storeData();
+	}
+}
+
 var gameGroups = ["---Chose Game type---","Action","RPG","Strategy","Racing","Simulation","MMO"],
 	consoleValue,
 	coopValue = "No",
 	multyplayerValue = "No",
 	singleplayerValue = "No";
+	errMsg = $('errors');
 
 makeChoises();
 
@@ -211,7 +275,7 @@ var displayLink = $('displayLink');
 	var clearLink = $('clear');
 	clearLink.addEventListener("click", clearLocal);
 	var save = $('submit');
-	save.addEventListener("click", storeData);
+	save.addEventListener("click", validate);
 
 	
 
