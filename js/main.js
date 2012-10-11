@@ -37,17 +37,17 @@ function getCheckboxCategory(){
 	if($('coop').checked){
 		coopValue = $('coop').value;
 	}else{
-		coopValue = "No"
+		coopValue = "No";
 	}
 		if($('multyplayer').checked){
 		multyplayerValue = $('multyplayer').value;
 	}else{
-		multyplayerValue = "No"
+		multyplayerValue = "No";
 	}
 		if($('singleplayer').checked){
 		singleplayerValue = $('singleplayer').value;
 	}else{
-		singleplayerValue = "No"
+		singleplayerValue = "No";
 	}
 };
 
@@ -214,37 +214,37 @@ function validate(e){
 	errMsg.innerHTML = "";
 	getGrops.style.border = "1px solid black";
 	getGname.style.border = "1px solid black";
-	getRday.style.border = "1px solid black";
 	getAat.style.border = "1px solid black";
 	getPri.style.border = "1px solid black";
+	getRday.style.border = "1px solid black";
 
 	var messageAry = [];
 
-	if(getGrops.value ==  "---Chose Game type---"){
-		var GroupError = " Please choose Game type !";
+	if(getGrops.value =="---Chose Game type---"){
+		var groupsError = " Please choose Game type !";
 		getGrops.style.border = "1px solid red";
-		messageAry.push(GroupError); 
+		messageAry.push(groupsError); 
 
 	}
 	if(getGname.value === ""){
-		var GnameError = " Please enter game name !";
+		var gnameError = " Please enter game name !";
 		getGname.style.border = "1px solid red";
-		messageAry.push(GnameError);
-	}
-	if(getRday.value === ""){
-		var RdayError = " Please enter Relise date !";
-		getRday.style.border = "1px solid red";
-		messageAry.push(RdayError);
+		messageAry.push(gnameError);
 	}
 	if(getAat.value === ""){
-		var AatError = " Please enter Available at !";
+		var aatError = " Please enter Available at !";
 		getAat.style.border = "1px solid red";
-		messageAry.push(AatError);
+		messageAry.push(aatError);
 	}
 	if(getPri.value === ""){
-		var PriError = " Please enter Price !";
+		var priError = " Please enter Price !";
 		getPri.style.border = "1px solid red";
-		messageAry.push(PriError);
+		messageAry.push(priError);
+	}
+	if(getRday.value === ""){
+		var rdayError = " Please enter Relise date !";
+		getRday.style.border = "1px solid red";
+		messageAry.push(rdayError);
 	}
 	// display errors
 	if(messageAry.length >= 1){
@@ -264,7 +264,7 @@ var gameGroups = ["---Chose Game type---","Action","RPG","Strategy","Racing","Si
 	consoleValue,
 	coopValue = "No",
 	multyplayerValue = "No",
-	singleplayerValue = "No";
+	singleplayerValue = "No",
 	errMsg = $('errors');
 
 makeChoises();
