@@ -106,6 +106,7 @@ function getData(){
 	$('items').style.display = "block";
 	for(var i=0, len=localStorage.length; i<len;i++){
 		var makeli = document.createElement('li');
+		var linksLi = document.createElement('li')
 		makeList.appendChild(makeli);
 		var key = localStorage.key(i);
 		var value = localStorage.getItem(key);
@@ -117,10 +118,74 @@ function getData(){
 			makeSubList.appendChild(makeSubli);
 			var optSubText = obj[n][0]+" "+obj[n][1];
 			makeSubli.innerHTML = optSubText;
+			makeSubList.appendChild(linksLi);
 		}
+		makeItemlinks(localStorage.key (i), linksLi); 
 	}
 	toggleControls("on");
 }
+
+function makeItemlinks(key, linksLi) {
+	var editLink = document.createElement('a');
+ 	editLink.href = "#";
+	editLink.key = key;
+	var editText = "Edit Game";
+	editLink.addEventListener("click", editItem);
+	editLink.innerHTML = editText;
+	linksLi.appendChild(editLink);
+
+	//var brakeTag = document.createElement('br');
+	//linksLi.appendChild(brakeTag);
+
+	var deleteLink = document.createElement('a');
+	deleteLink.href = "#";
+	deleteLink.key = key;
+	var deleteText = "Delete Game";
+	//deleteLink.addEventListener("click", deleteItem);
+	deleteLink.innerHTML = deleteText;
+	linksLi.appendChild(deleteLink);
+}
+
+function editItem(){
+	var value = localStorage.getItem(this.key);
+	var item = JSON.parse(value);
+
+	toggleControls("off");
+
+	$('gname').value = item.gname[1];
+	$('rday').value = item.rday[1];
+	$('aat').value = item.aat[1];
+	$('pri').value = item.pri[1];
+	//$('gametype').value = item.gametype[1];
+	$('addinfo').value = item.addinfo[1];
+	var radios = document.forms[0].getSelectedRadio;
+	for( var i=0; i<radios.length; i++){
+		if(radios[i].value == "XBox" && item.getSelectedRadio[1] == "XBox") {
+			radios[i].setAttribute("checked", "checked")
+		} else if(radios[i].value == "PS3" && item.getSelectedRadio[1] == "PS3") {
+			radios[i].setAttribute("checked", "checked")
+		} else if(radios[i].value == "PC" && item.getSelectedRadio[1] == "PC") {
+			radios[i].setAttribute("checked", "checked")
+		} else if(radios[i].value == "Wii" && item.getSelectedRadio[1] == "Wii") {
+			radios[i].setAttribute("checked", "checked")
+		} else if(radios[i].value == "MAC" && item.getSelectedRadio[1] == "MAC") {
+			radios[i].setAttribute("checked", "checked")
+		}
+	}
+	if(item.coopValue[i] == "coop") {
+		$('getCheckboxCategory').setAttribute("checked", "checked");
+	}
+	if(item.multyplayerValue[i] == "multyplayer") {
+		$('getCheckboxCategory').setAttribute("checked", "checked");
+	}	
+	if(item.singleplayerValue[i] == "singleplayer") {
+		$('getCheckboxCategory').setAttribute("checked", "checked");
+	}
+	$('priority').value = item.priority[1];
+	$('addinfo').value = item.addinfo[1];
+
+};
+
 function clearLocal(){
 	if(localStorage.length === 0){
 		alert("There is no data to clear.")
