@@ -164,15 +164,15 @@ function editItem(){
 	$('addinfo').value = item.addinfo[1];
 	var radios = document.forms[0].getSelectedRadio;
 	for( var i=0; i< radios.length; i++){
-		if(radios[i].value == "XBox" && obj.getSelectedRadio[1] == "XBox") {
+		if(radios[i].value == "XBox" && item.getSelectedRadio[1] == "XBox") {
 			radios[i].setAttribute("checked", "checked")
-		} else if(radios[i].value == "PS3" && obj.getSelectedRadio[1] == "PS3") {
+		} else if(radios[i].value == "PS3" && item.getSelectedRadio[1] == "PS3") {
 			radios[i].setAttribute("checked", "checked")
-		} else if(radios[i].value == "PC" && obj.getSelectedRadio[1] == "PC") {
+		} else if(radios[i].value == "PC" && item.getSelectedRadio[1] == "PC") {
 			radios[i].setAttribute("checked", "checked")
-		} else if(radios[i].value == "Wii" && obj.getSelectedRadio[1] == "Wii") {
+		} else if(radios[i].value == "Wii" && item.getSelectedRadio[1] == "Wii") {
 			radios[i].setAttribute("checked", "checked")
-		} else if(radios[i].value == "MAC" && obj.getSelectedRadio[1] == "MAC") {
+		} else if(radios[i].value == "MAC" && item.getSelectedRadio[1] == "MAC") {
 			radios[i].setAttribute("checked", "checked")
 		}
 	}
