@@ -1,5 +1,5 @@
 //Isayev Anton
-// VFW Project 2 
+// VFW Project 3 
 window.addEventListener("DOMContentLoaded", function(){
 
 
@@ -72,22 +72,26 @@ function toggleControls(n){
 	}
 }
 
-function storeData(){
+function storeData(key){
+	if(!key){
+		var id 			= Math.floor(Math.random( )*1000000001);
+	}else{
+		id = key;
+	}
 	getCheckboxCategory();
 	getSelectedRadio();
-	var id 				= Math.floor(Math.random( )*1000000001);
 	var item 			= {};
-	item.gname 			=["Game name:",$('gname').value];
-	item.rday 			=["Relise date:",$('rday').value];
-	item.aat 			=["Available at:",$('aat').value];
-	item.pri 			=["Price:",$('pri').value];
-	item.gametype 		=["Game type:",$('groups').value];
+	item.gname 			=["Game name:", $('gname').value];
+	item.rday 			=["Relise date:", $('rday').value];
+	item.aat 			=["Available at:", $('aat').value];
+	item.pri 			=["Price:", $('pri').value];
+	item.gametype 		=["Game type:", $('groups').value];
 	item.console 		=["Console:", consoleValue];
 	item.coop 			=["Co-op Game:", coopValue];
 	item.multyplayer 	=["Multi-player Game:", multyplayerValue];
 	item.singleplayer 	=["Single-player Game:", singleplayerValue];
-	item.priority 		=["Priority of the Game:",$('priority').value];
-	item.addinfo		=["Aditional Info:",$('aditionalinfo').value]
+	item.priority 		=["Priority of the Game:", $('priority').value];
+	item.addinfo		=["Aditional Info:", $('aditionalinfo').value]
 	localStorage.setItem(id, JSON.stringify(item));
 	alert("Game added");
 }
@@ -106,7 +110,7 @@ function getData(){
 	$('items').style.display = "block";
 	for(var i=0, len=localStorage.length; i<len;i++){
 		var makeli = document.createElement('li');
-		var linksLi = document.createElement('li')
+		var linksLi = document.createElement('li');
 		makeList.appendChild(makeli);
 		var key = localStorage.key(i);
 		var value = localStorage.getItem(key);
@@ -120,12 +124,12 @@ function getData(){
 			makeSubli.innerHTML = optSubText;
 			makeSubList.appendChild(linksLi);
 		}
-		makeItemlinks(localStorage.key (i), linksLi); 
+		makeItemLinks(localStorage.key(i), linksLi); 
 	}
 	toggleControls("on");
 }
 
-function makeItemlinks(key, linksLi) {
+function makeItemLinks(key, linksLi){
 	var editLink = document.createElement('a');
  	editLink.href = "#";
 	editLink.key = key;
@@ -141,7 +145,7 @@ function makeItemlinks(key, linksLi) {
 	deleteLink.href = "#";
 	deleteLink.key = key;
 	var deleteText = "Delete Game";
-	//deleteLink.addEventListener("click", deleteItem);
+	deleteLink.addEventListener("click", deleteItem);
 	deleteLink.innerHTML = deleteText;
 	linksLi.appendChild(deleteLink);
 }
@@ -156,19 +160,19 @@ function editItem(){
 	$('rday').value = item.rday[1];
 	$('aat').value = item.aat[1];
 	$('pri').value = item.pri[1];
-	//$('gametype').value = item.gametype[1];
-	$('aditionalinfo').value = item.addinfo[1];
+	$('gametype').value = item.gametype[1];
+	$('addinfo').value = item.addinfo[1];
 	var radios = document.forms[0].getSelectedRadio;
-	for( var i=0; i<radios.length; i++){
-		if(radios[i].value == "XBox" && item.getSelectedRadio[1] == "XBox") {
+	for( var i=0; i< radios.length; i++){
+		if(radios[i].value == "XBox" && obj.getSelectedRadio[1] == "XBox") {
 			radios[i].setAttribute("checked", "checked")
-		} else if(radios[i].value == "PS3" && item.getSelectedRadio[1] == "PS3") {
+		} else if(radios[i].value == "PS3" && obj.getSelectedRadio[1] == "PS3") {
 			radios[i].setAttribute("checked", "checked")
-		} else if(radios[i].value == "PC" && item.getSelectedRadio[1] == "PC") {
+		} else if(radios[i].value == "PC" && obj.getSelectedRadio[1] == "PC") {
 			radios[i].setAttribute("checked", "checked")
-		} else if(radios[i].value == "Wii" && item.getSelectedRadio[1] == "Wii") {
+		} else if(radios[i].value == "Wii" && obj.getSelectedRadio[1] == "Wii") {
 			radios[i].setAttribute("checked", "checked")
-		} else if(radios[i].value == "MAC" && item.getSelectedRadio[1] == "MAC") {
+		} else if(radios[i].value == "MAC" && obj.getSelectedRadio[1] == "MAC") {
 			radios[i].setAttribute("checked", "checked")
 		}
 	}
@@ -193,6 +197,16 @@ function editItem(){
 
 };
 
+function deleteItem(){
+	var ask = confirm("Are you sure you want to delit this game?");
+	if(ask){
+		localStorage.removeItem(this.key);
+		window.location.reload("delited");
+	}else{
+		alert("Game was not deleted.")
+	}
+};
+
 function clearLocal(){
 	if(localStorage.length === 0){
 		alert("There is no data to clear.")
@@ -202,7 +216,7 @@ function clearLocal(){
 		window.location.reload();
 		return false;
 	}
-}
+};
 
 function validate(e){
 	var getGrops = $('groups');
@@ -256,7 +270,7 @@ function validate(e){
 		e.preventDefault();
 		return false;
 	}else{
-		storeData();
+		storeData(this.key);
 	}
 }
 
@@ -268,15 +282,11 @@ var gameGroups = ["---Chose Game type---","Action","RPG","Strategy","Racing","Si
 	errMsg = $('errors');
 
 makeChoises();
-
-// //click events
+ //click events
 var displayLink = $('displayLink');
 	displayLink.addEventListener("click", getData);
 	var clearLink = $('clear');
 	clearLink.addEventListener("click", clearLocal);
 	var save = $('submit');
 	save.addEventListener("click", validate);
-
-	
-
 });
